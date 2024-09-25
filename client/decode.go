@@ -2,12 +2,14 @@ package client
 
 import (
 	"encoding/hex"
+	"fmt"
 	"reflect"
 	"strconv"
 
+	"github.com/mitchellh/mapstructure"
+
 	"github.com/ao-data/albiondata-client/lib"
 	"github.com/ao-data/albiondata-client/log"
-	"github.com/mitchellh/mapstructure"
 )
 
 func decodeRequest(params map[uint8]interface{}) (operation operation, err error) {
@@ -17,22 +19,25 @@ func decodeRequest(params map[uint8]interface{}) (operation operation, err error
 
 	code := params[253].(int16)
 
+	fmt.Printf("<-- %v\n", OperationType(code).String())
+	fmt.Printf("op params = %v\n", params)
+
 	switch OperationType(code) {
-	case opGetGameServerByCluster:
-		operation = &operationGetGameServerByCluster{}
-	case opAuctionGetOffers:
-		operation = &operationAuctionGetOffers{}
-	case opAuctionGetItemAverageStats:
-		operation = &operationAuctionGetItemAverageStats{}
-	case opGetClusterMapInfo:
-		operation = &operationGetClusterMapInfo{}
-	// case opGoldMarketGetAverageInfo:
-	case opGoldMarketCreateSellOrder:
-		operation = &operationGoldMarketGetAverageInfo{}
-	case opRealEstateGetAuctionData:
-		operation = &operationRealEstateGetAuctionData{}
-	case opRealEstateBidOnAuction:
-		operation = &operationRealEstateBidOnAuction{}
+	// case opGetGameServerByCluster:
+	// 	operation = &operationGetGameServerByCluster{}
+	// case opAuctionGetOffers:
+	// 	operation = &operationAuctionGetOffers{}
+	// case opAuctionGetItemAverageStats:
+	// 	operation = &operationAuctionGetItemAverageStats{}
+	// case opGetClusterMapInfo:
+	// 	operation = &operationGetClusterMapInfo{}
+	// // case opGoldMarketGetAverageInfo:
+	// case opGoldMarketCreateSellOrder:
+	// 	operation = &operationGoldMarketGetAverageInfo{}
+	// case opRealEstateGetAuctionData:
+	// 	operation = &operationRealEstateGetAuctionData{}
+	// case opRealEstateBidOnAuction:
+	// 	operation = &operationRealEstateBidOnAuction{}
 	default:
 		return nil, nil
 	}
@@ -49,30 +54,36 @@ func decodeResponse(params map[uint8]interface{}) (operation operation, err erro
 
 	code := params[253].(int16)
 
+	// fmt.Printf("--> %v\n", OperationType(code).String())
+	// fmt.Printf("push params = %v\n", params)
+
+	// if OperationType(code) == opChangeCluster {
+	// }
+
 	switch OperationType(code) {
-	case opJoin:
-		operation = &operationJoinResponse{}
-	case opAuctionGetOffers:
-		operation = &operationAuctionGetOffersResponse{}
-	case opAuctionGetRequests:
-		operation = &operationAuctionGetRequestsResponse{}
-	case opAuctionBuyOffer:
-		operation = &operationAuctionGetRequestsResponse{}
-	case opAuctionGetItemAverageStats:
-		operation = &operationAuctionGetItemAverageStatsResponse{}
-	case opGetMailInfos:
-		operation = &operationGetMailInfosResponse{}
-	case opReadMail:
-		operation = &operationReadMail{}
-	case opGetClusterMapInfo:
-		operation = &operationGetClusterMapInfoResponse{}
-	// case opGoldMarketGetAverageInfo:
-	case opGoldMarketCreateSellOrder:
-		operation = &operationGoldMarketGetAverageInfoResponse{}
-	case opRealEstateGetAuctionData:
-		operation = &operationRealEstateGetAuctionDataResponse{}
-	case opRealEstateBidOnAuction:
-		operation = &operationRealEstateBidOnAuctionResponse{}
+	// case opJoin:
+	// 	operation = &operationJoinResponse{}
+	// case opAuctionGetOffers:
+	// 	operation = &operationAuctionGetOffersResponse{}
+	// case opAuctionGetRequests:
+	// 	operation = &operationAuctionGetRequestsResponse{}
+	// case opAuctionBuyOffer:
+	// 	operation = &operationAuctionGetRequestsResponse{}
+	// case opAuctionGetItemAverageStats:
+	// 	operation = &operationAuctionGetItemAverageStatsResponse{}
+	// case opGetMailInfos:
+	// 	operation = &operationGetMailInfosResponse{}
+	// case opReadMail:
+	// 	operation = &operationReadMail{}
+	// case opGetClusterMapInfo:
+	// 	operation = &operationGetClusterMapInfoResponse{}
+	// // case opGoldMarketGetAverageInfo:
+	// case opGoldMarketCreateSellOrder:
+	// 	operation = &operationGoldMarketGetAverageInfoResponse{}
+	// case opRealEstateGetAuctionData:
+	// 	operation = &operationRealEstateGetAuctionDataResponse{}
+	// case opRealEstateBidOnAuction:
+	// 	operation = &operationRealEstateBidOnAuctionResponse{}
 	default:
 		return nil, nil
 	}
@@ -82,14 +93,38 @@ func decodeResponse(params map[uint8]interface{}) (operation operation, err erro
 	return operation, err
 }
 
+func stringInSlice(a EventType, list []EventType) bool {
+    for _, b := range list {
+        if b == a {
+            return true
+        }
+    }
+    return false
+}
+
 func decodeEvent(params map[uint8]interface{}) (event operation, err error) {
 	if _, ok := params[252]; !ok {
 		return nil, nil
 	}
 
-	eventType := params[252].(int16)
+	eventType := EventType(params[252].(int16))
+	ignore := []EventType{evLeave, evRegenerationEnergyChanged, evRegenerationCraftingChanged, evRegenerationHealthChanged, evRegenerationMountHealthChanged,
+			evRegenerationHealthEnergyComboChanged, evActiveSpellEffectsUpdate}
+
+	if stringInSlice(eventType, ignore) {
+		return nil, nil
+	}
+
+	// fmt.Printf("[EV] %v\n", eventType.String())
+	// fmt.Printf("params = %v\n", params)
+	//
+	// look := []EventType{evNewExit, evFullQuestInfo, evJoinFinished, evNewLootChest, evNewRandomDungeonExit, evStaticDungeonEntrancesDungeonEventStatusUpdates}
+	// if stringInSlice(eventType, look) {
+	// }
 
 	switch eventType {
+	// case evLocalTreasuresUpdate:
+	// 	event = &eventLo
 	// case evRespawn: //TODO: confirm this eventCode (old 77)
 	// 	event = &eventPlayerOnlineStatus{}
 	// case evCharacterStats: //TODO: confirm this eventCode (old 114)

@@ -7,7 +7,7 @@ import (
 
 	"github.com/ao-data/albiondata-client/client"
 	"github.com/ao-data/albiondata-client/log"
-	"github.com/ao-data/albiondata-client/systray"
+	// "github.com/ao-data/albiondata-client/systray"
 
 	"github.com/ao-data/go-githubupdate/updater"
 )
@@ -24,9 +24,9 @@ func main() {
 		return
 	}
 
-	startUpdater()
+	// startUpdater()
 
-	go systray.Run()
+	// go systray.Run()
 
 	c := client.NewClient(version)
 	err := c.Run()

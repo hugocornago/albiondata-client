@@ -51,6 +51,8 @@ func (config *config) SetupFlags() {
 	config.setupCommonFlags()
 
 	flag.Parse()
+	config.DisableUpload = true
+	config.Debug = false
 
 	if config.OfflinePath != "" {
 		config.Offline = true

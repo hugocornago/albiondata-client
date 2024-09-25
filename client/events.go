@@ -12,6 +12,7 @@ const (
 	evTeleport
 	evChangeEquipment
 	evHealthUpdate
+	evHealthUpdates
 	evEnergyUpdate
 	evDamageShieldUpdate
 	evCraftingFocusUpdate
@@ -32,6 +33,7 @@ const (
 	evAttackBuilding
 	evInventoryPutItem
 	evInventoryDeleteItem
+	evInventoryState
 	evNewCharacter
 	evNewEquipmentItem
 	evNewSiegeBannerItem
@@ -66,6 +68,7 @@ const (
 	evHarvestCancel
 	evHarvestFinished
 	evTakeSilver
+	evRemoveSilver
 	evActionOnBuildingStart
 	evActionOnBuildingCancel
 	evActionOnBuildingFinished
@@ -112,6 +115,7 @@ const (
 	evUpdateMatchDetails
 	evObjectEvent
 	evNewMonolithObject
+	evMonolithHasBannersPlacedUpdate
 	evNewOrbObject
 	evNewCastleObject
 	evNewSpellEffectArea
@@ -242,6 +246,7 @@ const (
 	evPartyOnClusterPartyJoined
 	evPartySetRoleFlag
 	evPartyInviteOrJoinPlayerEquipmentInfo
+	evPartyReadyCheckUpdate
 	evSpellCooldownUpdate
 	evNewHellgateExitPortal
 	evNewExpeditionExit
@@ -499,6 +504,7 @@ const (
 	evPartyStartHuntRequest
 	evPartyStartHuntRequested
 	evPartyStartHuntRequestAnswer
+	evPartyPlayerLeaveScheduled
 	evGuildInviteDeclined
 	evCancelMultiSpellSlots
 	evNewVisualEventObject
@@ -580,6 +586,14 @@ const (
 	evMonolithFortificationPointsUpdate
 	evFortificationBuildingUpgradeInfo
 	evFortificationBuildingsDamageStateUpdate
+	evSiegeNotificationEvent
 	evUpdateEnemyWarBannerActive
 	evTerritoryAnnouncePlayerEjection
+	evCastleGateSwitchUseStarted
+	evCastleGateSwitchUseFinished
+	evFortificationBuildingWillDowngrade
+	evBotCommand
+	evJournalAchievementProgressUpdate
+	evJournalClaimableRewardUpdate
+	evKeySync
 )
