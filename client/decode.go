@@ -19,8 +19,8 @@ func decodeRequest(params map[uint8]interface{}) (operation operation, err error
 
 	code := params[253].(int16)
 
-	fmt.Printf("<-- %v\n", OperationType(code).String())
-	fmt.Printf("op params = %v\n", params)
+	// fmt.Printf("<-- %v\n", OperationType(code).String())
+	// fmt.Printf("op params = %v\n", params)
 
 	switch OperationType(code) {
 	// case opGetGameServerByCluster:
@@ -108,19 +108,18 @@ func decodeEvent(params map[uint8]interface{}) (event operation, err error) {
 	}
 
 	eventType := EventType(params[252].(int16))
-	ignore := []EventType{evLeave, evRegenerationEnergyChanged, evRegenerationCraftingChanged, evRegenerationHealthChanged, evRegenerationMountHealthChanged,
-			evRegenerationHealthEnergyComboChanged, evActiveSpellEffectsUpdate}
+	// ignore := []EventType{evLeave, evRegenerationEnergyChanged, evRegenerationCraftingChanged, evRegenerationHealthChanged, evRegenerationMountHealthChanged,
+			// evRegenerationHealthEnergyComboChanged, evActiveSpellEffectsUpdate}
 
-	if stringInSlice(eventType, ignore) {
-		return nil, nil
-	}
-
-	// fmt.Printf("[EV] %v\n", eventType.String())
-	// fmt.Printf("params = %v\n", params)
-	//
-	// look := []EventType{evNewExit, evFullQuestInfo, evJoinFinished, evNewLootChest, evNewRandomDungeonExit, evStaticDungeonEntrancesDungeonEventStatusUpdates}
-	// if stringInSlice(eventType, look) {
+	// if stringInSlice(eventType, ignore) {
+	// 	return nil, nil
 	// }
+
+	look := []EventType{evNewHarvestableObject}
+	if stringInSlice(eventType, look) {
+		// fmt.Printf("[EV] %v\n", eventType.String())
+		fmt.Printf("params = %v\n", params)
+	}
 
 	switch eventType {
 	// case evLocalTreasuresUpdate:
