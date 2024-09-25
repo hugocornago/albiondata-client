@@ -122,6 +122,14 @@ func decodeEvent(params map[uint8]interface{}) (event operation, err error) {
 	}
 
 	switch eventType {
+	case evNewHarvestableObject:
+		// Tipo 5: 12 (Hoz), 6 (Piedra), 23 (Mineral), 0 (Madera)
+		// 6: Ni idea
+		// 7: Tier
+		// 8: Coordenadas
+		// 10: Cargas
+		// 11: Enchant
+		event = &eventNewHarvestableObject{}
 	// case evLocalTreasuresUpdate:
 	// 	event = &eventLo
 	// case evRespawn: //TODO: confirm this eventCode (old 77)
