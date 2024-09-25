@@ -23,21 +23,21 @@ func decodeRequest(params map[uint8]interface{}) (operation operation, err error
 	// fmt.Printf("op params = %v\n", params)
 
 	switch OperationType(code) {
-	// case opGetGameServerByCluster:
-	// 	operation = &operationGetGameServerByCluster{}
-	// case opAuctionGetOffers:
-	// 	operation = &operationAuctionGetOffers{}
-	// case opAuctionGetItemAverageStats:
-	// 	operation = &operationAuctionGetItemAverageStats{}
-	// case opGetClusterMapInfo:
-	// 	operation = &operationGetClusterMapInfo{}
-	// // case opGoldMarketGetAverageInfo:
-	// case opGoldMarketCreateSellOrder:
-	// 	operation = &operationGoldMarketGetAverageInfo{}
-	// case opRealEstateGetAuctionData:
-	// 	operation = &operationRealEstateGetAuctionData{}
-	// case opRealEstateBidOnAuction:
-	// 	operation = &operationRealEstateBidOnAuction{}
+	case opGetGameServerByCluster:
+		operation = &operationGetGameServerByCluster{}
+	case opAuctionGetOffers:
+		operation = &operationAuctionGetOffers{}
+	case opAuctionGetItemAverageStats:
+		operation = &operationAuctionGetItemAverageStats{}
+	case opGetClusterMapInfo:
+		operation = &operationGetClusterMapInfo{}
+	// case opGoldMarketGetAverageInfo:
+	case opGoldMarketCreateSellOrder:
+		operation = &operationGoldMarketGetAverageInfo{}
+	case opRealEstateGetAuctionData:
+		operation = &operationRealEstateGetAuctionData{}
+	case opRealEstateBidOnAuction:
+		operation = &operationRealEstateBidOnAuction{}
 	default:
 		return nil, nil
 	}
@@ -61,29 +61,29 @@ func decodeResponse(params map[uint8]interface{}) (operation operation, err erro
 	// }
 
 	switch OperationType(code) {
-	// case opJoin:
-	// 	operation = &operationJoinResponse{}
-	// case opAuctionGetOffers:
-	// 	operation = &operationAuctionGetOffersResponse{}
-	// case opAuctionGetRequests:
-	// 	operation = &operationAuctionGetRequestsResponse{}
-	// case opAuctionBuyOffer:
-	// 	operation = &operationAuctionGetRequestsResponse{}
-	// case opAuctionGetItemAverageStats:
-	// 	operation = &operationAuctionGetItemAverageStatsResponse{}
-	// case opGetMailInfos:
-	// 	operation = &operationGetMailInfosResponse{}
-	// case opReadMail:
-	// 	operation = &operationReadMail{}
-	// case opGetClusterMapInfo:
-	// 	operation = &operationGetClusterMapInfoResponse{}
-	// // case opGoldMarketGetAverageInfo:
-	// case opGoldMarketCreateSellOrder:
-	// 	operation = &operationGoldMarketGetAverageInfoResponse{}
-	// case opRealEstateGetAuctionData:
-	// 	operation = &operationRealEstateGetAuctionDataResponse{}
-	// case opRealEstateBidOnAuction:
-	// 	operation = &operationRealEstateBidOnAuctionResponse{}
+	case opJoin:
+		operation = &operationJoinResponse{}
+	case opAuctionGetOffers:
+		operation = &operationAuctionGetOffersResponse{}
+	case opAuctionGetRequests:
+		operation = &operationAuctionGetRequestsResponse{}
+	case opAuctionBuyOffer:
+		operation = &operationAuctionGetRequestsResponse{}
+	case opAuctionGetItemAverageStats:
+		operation = &operationAuctionGetItemAverageStatsResponse{}
+	case opGetMailInfos:
+		operation = &operationGetMailInfosResponse{}
+	case opReadMail:
+		operation = &operationReadMail{}
+	case opGetClusterMapInfo:
+		operation = &operationGetClusterMapInfoResponse{}
+	// case opGoldMarketGetAverageInfo:
+	case opGoldMarketCreateSellOrder:
+		operation = &operationGoldMarketGetAverageInfoResponse{}
+	case opRealEstateGetAuctionData:
+		operation = &operationRealEstateGetAuctionDataResponse{}
+	case opRealEstateBidOnAuction:
+		operation = &operationRealEstateBidOnAuctionResponse{}
 	default:
 		return nil, nil
 	}
@@ -123,12 +123,6 @@ func decodeEvent(params map[uint8]interface{}) (event operation, err error) {
 
 	switch eventType {
 	case evNewHarvestableObject:
-		// Tipo 5: 12 (Hoz), 6 (Piedra), 23 (Mineral), 0 (Madera)
-		// 6: Ni idea
-		// 7: Tier
-		// 8: Coordenadas
-		// 10: Cargas
-		// 11: Enchant
 		event = &eventNewHarvestableObject{}
 	// case evLocalTreasuresUpdate:
 	// 	event = &eventLo
